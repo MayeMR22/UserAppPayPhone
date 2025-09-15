@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct UserAppPayApp: App {
+    private let userRepository: UsersRepositoryType
+    
+    init() {
+        let serviceFactory = ServiceFactory()
+        self.userRepository = UsersRepository(serviceFactory: serviceFactory)
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            UsersCoordinatorView(userRepository: userRepository)
         }
     }
 }

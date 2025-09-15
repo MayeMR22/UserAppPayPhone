@@ -10,7 +10,7 @@ import Alamofire
 
 protocol ServiceContractType {
     associatedtype ResponseType: Decodable
-    func execute() async throws -> ResponseType?
+    func execute() async throws -> ResponseType
 }
 
 protocol NetworkClientType {
