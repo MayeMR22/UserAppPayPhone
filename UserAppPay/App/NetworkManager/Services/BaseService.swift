@@ -16,7 +16,7 @@ class BaseService<T: Decodable>: ServiceContractType {
         self.client = client
     }
 
-    func execute() async throws -> T? {
+    func execute() async throws -> T {
         do {
             return try await client.request(endpoint, responseType: T.self)
         } catch let error as DecodingError {
