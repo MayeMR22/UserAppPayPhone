@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  UsersRemoteDataSource.swift
 //  UserAppPay
 //
 //  Created by Maye Rios on 15/09/25.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol UsersRepositoryType {
+protocol UsersRemoteDataSourceType {
     func getUsers() async throws -> [User]
 }
 
-final class UsersRepository: UsersRepositoryType {
+final class UsersRemoteDataSource: UsersRemoteDataSourceType {
     private let serviceFactory: ServiceFactory
     
     init(serviceFactory: ServiceFactory) {

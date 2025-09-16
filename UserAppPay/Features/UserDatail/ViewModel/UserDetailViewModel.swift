@@ -35,7 +35,21 @@ class UserDetailViewModel: ObservableObject {
         isEditing.toggle()
     }
     
-    func saveChanges() {
-        // TODO: - Feature save user
+    func saveChanges() async {
+        guard !name.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        
+        var updatedUser = user
+        updatedUser.name = name
+        updatedUser.email = email
+        
+        do {
+            try await userRepository.updateUser(updatedUser)
+            
+            self.user = updatedUser
+            self.isEditing = false
+            
+        } catch {
+            print("Error al actualizar el usuario: \(error)")
+        }
     }
 }

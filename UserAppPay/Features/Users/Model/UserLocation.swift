@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserLocation: Codable {
+struct UserLocation: Codable, Equatable, Hashable {
     let latitud: String?
     let longitud: String?
     

@@ -9,12 +9,12 @@ import SwiftUI
 
 struct UsersView: View {
     @StateObject var viewModel: UsersViewModel
-
+    
     var body: some View {
         Group {
             if viewModel.isLoading && viewModel.users.isEmpty {
                 ProgressView(NSLocalizedString("loading", comment: ""))
-            
+                
             } else if let errorMessage = viewModel.errorMessage {
                 VStack(spacing: 10) {
                     Text("⚠️")
@@ -27,12 +27,8 @@ struct UsersView: View {
                     .buttonStyle(.bordered)
                 }
                 .padding()
-
-            } else if viewModel.users.isEmpty {
-                Text("No hay usuarios. Agrega uno nuevo.")
-                    .foregroundColor(.secondary)
-            
-            } else {
+                
+            }  else {
                 List {
                     ForEach(viewModel.users) { user in
                         UserRowView(user: user)

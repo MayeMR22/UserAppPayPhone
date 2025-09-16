@@ -13,7 +13,9 @@ struct UserAppPayApp: App {
     
     init() {
         let serviceFactory = ServiceFactory()
-        self.userRepository = UsersRepository(serviceFactory: serviceFactory)
+        let remoteSource = UsersRemoteDataSource(serviceFactory: serviceFactory)
+        let localSource = UsersLocalDataSource()
+        self.userRepository = UsersRepository(remoteData: remoteSource, localData: localSource)
     }
     
     var body: some Scene {
