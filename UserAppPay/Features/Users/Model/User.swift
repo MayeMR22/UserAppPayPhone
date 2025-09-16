@@ -16,12 +16,4 @@ struct User: Codable, Identifiable, Hashable {
     let phone: String?
     let website: String?
     let company: Company?
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: User, rhs: User) -> Bool {
-        lhs.id == rhs.id
-    }
 }

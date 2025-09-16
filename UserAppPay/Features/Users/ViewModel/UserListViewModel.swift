@@ -23,27 +23,21 @@ final class UsersViewModel: ObservableObject {
     }
     
     func onAppear() {
-        guard users.isEmpty else { return }
-
         Task {
-            await fetchUsers()
+            await fetchUsers(forceRefresh: false)
         }
     }
     
-    func fetchUsers() async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            let fetchedUsers = try await userRepository.getUsers()
-            self.users = fetchedUsers.sorted { $0.id > $1.id }
-        } catch {
-            self.errorMessage = error.localizedDescription
-            print("Error fetching users: \(error)")
-        }
-        
-        isLoading = false
-    }
+    func fetchUsers(forceRefresh: Bool) async {
+           isLoading = true
+           errorMessage = nil
+           do {
+               self.users = try await userRepository.getUsers(forceRefresh: forceRefresh)
+           } catch {
+               self.errorMessage = error.localizedDescription
+           }
+           isLoading = false
+       }
     
     func deleteUser(at offsets: IndexSet) {
         // TODO: - Feature delete user

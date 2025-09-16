@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Company: Codable {
+struct Company: Codable, Equatable, Hashable {
     let name: String?
     let catchPhrase: String?
     let bs: String?
