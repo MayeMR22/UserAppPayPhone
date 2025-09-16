@@ -9,6 +9,7 @@ protocol UsersRepositoryType {
     func getUsers(forceRefresh: Bool) async throws -> [User]
     func save(users: [User]) async throws
     func updateUser(_ user: User) async throws
+    func addUser(name: String, email: String, phone: String) async throws -> User
 }
 
 final class UsersRepository: UsersRepositoryType {
@@ -46,5 +47,9 @@ final class UsersRepository: UsersRepositoryType {
     
     func updateUser(_ user: User) async throws {
         try await localData.updateUser(user)
+    }
+    
+    func addUser(name: String, email: String, phone: String) async throws -> User {
+        return try await localData.addUser(name: name, email: email, phone: phone)
     }
 }

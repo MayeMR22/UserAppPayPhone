@@ -10,7 +10,7 @@ import SwiftUI
 struct UsersCoordinatorView: View {
     @StateObject private var coordinator = BaseCoordinator()
     let userRepository: UsersRepositoryType
-
+    
     var body: some View {
         NavigationStack(path: $coordinator.path) {
             UsersView(viewModel: UsersViewModel(
@@ -25,8 +25,16 @@ struct UsersCoordinatorView: View {
                 ))
             }
         }
-        .sheet(item: $coordinator.sheetItem) { sheet in
-            // TODO: - Feature add user
+        .sheet(item: $coordinator.sheetItem, onDismiss: {
+            coordinator.refreshUserList.send()
+        }) { sheet in
+            switch sheet {
+            case .createUser:
+                CreateUserView(viewModel: CreateUserViewModel(
+                    userRepository: userRepository,
+                    coordinator: coordinator)
+                )
+            }
         }
     }
 }

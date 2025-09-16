@@ -11,10 +11,29 @@ protocol UsersLocalDataSourceType {
     func getUsers() async throws -> [User]
     func save(users: [User]) async throws
     func updateUser(_ user: User) async throws
+    func addUser(name: String, email: String, phone: String) async throws -> User
 }
 
 @MainActor
 final class  UsersLocalDataSource: UsersLocalDataSourceType {
+    func addUser(name: String, email: String, phone: String) async throws -> User {
+        let newUserObject = RealmUser()
+        let newId = (realm.objects(RealmUser.self).min(ofProperty: "id") as Int? ?? 0) - 1
+        
+        newUserObject.id = newId
+        newUserObject.name = name
+        newUserObject.email = email
+        newUserObject.phone = phone
+        newUserObject.username = name.lowercased().replacingOccurrences(of: " ", with: "")
+        newUserObject.isLocallyCreated = true
+        
+        try realm.write {
+            realm.add(newUserObject)
+        }
+        
+        return newUserObject.toUser()
+    }
+    
     private let realm: Realm
     
     init() {

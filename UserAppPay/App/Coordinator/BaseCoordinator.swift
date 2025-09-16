@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 @MainActor
 class BaseCoordinator: ObservableObject {
     @Published var path = NavigationPath()
     @Published var sheetItem: Sheet? = nil
+    let refreshUserList = PassthroughSubject<Void, Never>()
 
     enum Sheet: Identifiable {
         case createUser

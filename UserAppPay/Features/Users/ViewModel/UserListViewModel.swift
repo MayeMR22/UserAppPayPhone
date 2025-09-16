@@ -13,6 +13,8 @@ final class UsersViewModel: ObservableObject {
     @Published private(set) var users: [User] = []
     @Published private(set) var isLoading = false
     @Published var errorMessage: String?
+    private var cancellables = Set<AnyCancellable>()
+
     
     private let userRepository: UsersRepositoryType
     private let coordinator: BaseCoordinator
@@ -20,6 +22,7 @@ final class UsersViewModel: ObservableObject {
     init(userRepository: UsersRepositoryType, coordinator: BaseCoordinator) {
         self.userRepository = userRepository
         self.coordinator = coordinator
+        suscribeRefresh()
     }
     
     func onAppear() {
@@ -49,5 +52,15 @@ final class UsersViewModel: ObservableObject {
 
     func didTapAddUser() {
         coordinator.showCreateUserSheet()
+    }
+    
+    private func suscribeRefresh() {
+        coordinator.refreshUserList
+            .sink { [weak self] in
+                Task {
+                    await self?.fetchUsers(forceRefresh: false)
+                }
+            }
+            .store(in: &cancellables)
     }
 }
