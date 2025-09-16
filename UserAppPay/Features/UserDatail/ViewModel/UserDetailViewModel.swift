@@ -35,7 +35,7 @@ class UserDetailViewModel: ObservableObject {
         isEditing.toggle()
     }
     
-    func saveChanges() async {
+    func saveChanges() async throws {
         guard !name.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         
         var updatedUser = user
@@ -49,7 +49,7 @@ class UserDetailViewModel: ObservableObject {
             self.isEditing = false
             
         } catch {
-            print("Error al actualizar el usuario: \(error)")
+            throw APINetworkError.invalidData
         }
     }
 }

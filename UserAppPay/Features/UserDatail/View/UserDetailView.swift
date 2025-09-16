@@ -61,7 +61,7 @@ struct UserDetailView: View {
                 Button(viewModel.isEditing ? "Guardar" : "Editar") {
                     if viewModel.isEditing {
                         Task {
-                            await viewModel.saveChanges()
+                            try await viewModel.saveChanges()
                         }
                     } else {
                         viewModel.toggleEdit()

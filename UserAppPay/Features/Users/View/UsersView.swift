@@ -11,38 +11,18 @@ struct UsersView: View {
     @StateObject var viewModel: UsersViewModel
     
     var body: some View {
-        Group {
-            if viewModel.isLoading && viewModel.users.isEmpty {
-                ProgressView(NSLocalizedString("loading", comment: ""))
-                
-            } else if let errorMessage = viewModel.errorMessage {
-                VStack(spacing: 10) {
-                    Text("⚠️")
-                        .font(.largeTitle)
-                    Text(errorMessage)
-                        .multilineTextAlignment(.center)
-                    Button("Intentar de nuevo") {
-                        Task { await viewModel.fetchUsers() }
+        List {
+            ForEach(viewModel.users) { user in
+                UserRowView(user: user)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        viewModel.didTapUser(user)
                     }
-                    .buttonStyle(.bordered)
-                }
-                .padding()
-                
-            }  else {
-                List {
-                    ForEach(viewModel.users) { user in
-                        UserRowView(user: user)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                viewModel.didTapUser(user)
-                            }
-                    }
-                    .onDelete(perform: viewModel.deleteUser)
-                }
-                .refreshable {
-                    await viewModel.fetchUsers()
-                }
             }
+            .onDelete(perform: viewModel.deleteUser)
+        }
+        .refreshable {
+            await viewModel.fetchUsers(forceRefresh: false)
         }
         .navigationTitle(NSLocalizedString("Usuarios", comment: ""))
         .toolbar {
