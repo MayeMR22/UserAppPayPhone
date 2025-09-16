@@ -49,7 +49,7 @@ La arquitectura de la aplicación está diseñada para ser escalable y fácil de
 
 1.  **Clonar el Repositorio:**
     ```bash
-    git clone [[URL-DE-TU-REPOSITORIO]](https://github.com/MayeMR22/UserAppPayPhone.git)
+    git clone https://github.com/MayeMR22/UserAppPayPhone.git
     ```
 2.  **Abrir en Xcode:**
     Abre el archivo `.xcodeproj` o `.xcworkspace` en Xcode.
