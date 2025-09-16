@@ -60,6 +60,7 @@ La arquitectura de la aplicación está diseñada para ser escalable y fácil de
 
 ## 📝 Aspectos a Considerar
 
+* **Agregar funcionalidad de Eliminar:** En la prueba quedo pendiente implementar la funcionalidad de eliminar usuario. 
 * **Manejo de Errores:** El manejo de errores actual es básico (mensajes simples en la UI). 
 * **Pruebas Unitarias:** La arquitectura, basada en protocolos e inyección de dependencias (`UserRepositoryType`, `UserLocalDataSourceType`), está perfectamente diseñada para ser testeable. El siguiente paso sería añadir pruebas unitarias para los ViewModels y el Repositorio, usando "mocks" de las dependencias.
 * **UI/UX:** El enfoque principal fue la arquitectura y la funcionalidad. La interfaz de usuario es limpia y funcional, pero podría ser mejorada aún más con animaciones y un diseño más elaborado.
